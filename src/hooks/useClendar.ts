@@ -8,9 +8,16 @@ export const useCalendar = () => {
     const { events, eventActive } = useSelector<Global, Calendars>(state => state.calendar)
     const dispatch = useDispatch()
 
-    const startAddEvent = async (event: Event) => {
+    const startEvent = async (event: Event) => {
         try {
-            dispatch(addEvent(event))
+
+            if (event.id) {
+                dispatch(updateEvent(event))
+            } else {
+                dispatch(addEvent({ id: Date.now(), ...event }))
+
+            }
+
         } catch (error) {
             console.log(error)
         }
@@ -21,13 +28,6 @@ export const useCalendar = () => {
         dispatch(activeEvent(event))
     }
 
-    const startUpdateEvent = async (event: Event) => {
-        try {
-            dispatch(updateEvent(event))
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     const startDeleteEvent = async (id: number) => {
         try {
@@ -45,11 +45,11 @@ export const useCalendar = () => {
     return {
         events,
         eventActive,
-        startAddEvent,
+        viewDelete: !!eventActive,
         startActiveEvent,
         startCleanEvent,
         startDeleteEvent,
-        startUpdateEvent
+        startEvent
     }
 }
 

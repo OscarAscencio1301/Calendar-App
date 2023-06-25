@@ -12,7 +12,7 @@ import { Event } from '../../interfaces/calendar'
 export const CalendarPage = () => {
 
   const [viewCurrent, setviewCurrent] = useState<View>('month')
-  const { events, eventActive, startActiveEvent } = useCalendar()
+  const { events, startActiveEvent } = useCalendar()
   const { changeModalView } = useComponents()
 
   const onViewChange = (view: View) => {
@@ -35,7 +35,7 @@ export const CalendarPage = () => {
     <>
       <Navbar />
       <ButtonAdd />
-      {eventActive && <ButtonDelete />}
+      <ButtonDelete />
       <ModalEvents />
       <Calendar
         culture={'es'}

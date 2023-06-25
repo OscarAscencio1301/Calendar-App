@@ -37,7 +37,7 @@ const inititalState: Event = {
 export const ModalEvents = () => {
 
     const { isOpenModal, changeModalView } = useComponents()
-    const { startAddEvent, startCleanEvent, startUpdateEvent, eventActive } = useCalendar()
+    const { startEvent, startCleanEvent, eventActive } = useCalendar()
 
 
     const { form, start, end, title, desc, changeEvent, changeEventDataPicker, resetValues, setform } = useForm(inititalState)
@@ -50,11 +50,7 @@ export const ModalEvents = () => {
         if (difference <= 0 || isNaN(difference)) return Swal.fire('Fechas Incorrectas', 'Revisar tema de fechas', 'error')
         if (title.trim().length <= 3) return Swal.fire('Título obligatorio', 'Agregar un título mayor a 5 caracteres', 'error')
 
-        if (eventActive) {
-            startUpdateEvent(form)
-        } else {
-            startAddEvent({ id: Date.now(), ...form })
-        }
+        startEvent(form)
 
         changeModalView()
         resetValues()
@@ -64,8 +60,6 @@ export const ModalEvents = () => {
     useEffect(() => {
         if (eventActive) {
             setform(eventActive)
-        } else {
-            setform(inititalState)
         }
     }, [eventActive, setform])
 

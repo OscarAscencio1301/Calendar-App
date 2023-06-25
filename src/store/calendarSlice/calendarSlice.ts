@@ -13,6 +13,7 @@ export const calendarSlice = createSlice({
     reducers: {
         addEvent: (state, action) => {
             state.events.push(action.payload)
+            state.eventActive = null
         },
         activeEvent: (state, action) => {
             state.eventActive = action.payload
@@ -22,6 +23,7 @@ export const calendarSlice = createSlice({
         },
         deleteEvent: (state, action) => {
             state.events = state.events.filter(event => event.id !== action.payload)
+            state.eventActive = null
         },
         cleanEvent: (state) => {
             state.eventActive = null

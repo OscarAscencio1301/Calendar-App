@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Components } from "../../interfaces/components";
 
 const initialState: Components = {
-    isOpenModal: true
+    isOpenModal: false
 }
 
 

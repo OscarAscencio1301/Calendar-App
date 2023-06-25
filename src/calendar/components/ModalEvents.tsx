@@ -7,9 +7,11 @@ registerLocale('es', es)
 import './styles.css'
 import "react-datepicker/dist/react-datepicker.css";
 
-import { addHours } from "date-fns";
-import { FormEvent } from 'react';
+import { addHours, differenceInSeconds } from "date-fns";
+import { FormEvent, useEffect } from 'react';
 import { useCalendar, useComponents, useForm } from '../../hooks';
+import Swal from 'sweetalert2';
+import { Event } from '../../interfaces/calendar';
 
 
 const customStyles = {
@@ -25,23 +27,48 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
+const inititalState: Event = {
+    start: new Date(),
+    end: addHours(new Date, 2),
+    title: '',
+    desc: ''
+}
+
 export const ModalEvents = () => {
 
     const { isOpenModal, changeModalView } = useComponents()
-    const { startAddEvent } = useCalendar()
+    const { startAddEvent, startCleanEvent, startUpdateEvent, eventActive } = useCalendar()
 
-    const { form, start, end, title, desc, changeEvent, changeEventDataPicker } = useForm({
-        start: new Date(),
-        end: addHours(new Date, 2),
-        title: '',
-        desc: ''
-    })
+
+    const { form, start, end, title, desc, changeEvent, changeEventDataPicker, resetValues, setform } = useForm(inititalState)
+
+
 
     const sendFormEvent = (e: FormEvent) => {
         e.preventDefault()
-        startAddEvent({ id: 123, ...form })
+        const difference = differenceInSeconds(end, start)
+        if (difference <= 0 || isNaN(difference)) return Swal.fire('Fechas Incorrectas', 'Revisar tema de fechas', 'error')
+        if (title.trim().length <= 3) return Swal.fire('Título obligatorio', 'Agregar un título mayor a 5 caracteres', 'error')
+
+        if (eventActive) {
+            startUpdateEvent(form)
+        } else {
+            startAddEvent({ id: Date.now(), ...form })
+        }
+
         changeModalView()
+        resetValues()
+        startCleanEvent()
     }
+
+    useEffect(() => {
+        if (eventActive) {
+            setform(eventActive)
+        } else {
+            setform(inititalState)
+        }
+    }, [eventActive, setform])
+
 
 
     return (
@@ -72,7 +99,7 @@ export const ModalEvents = () => {
                     <label>Titulo y notas</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className={`form-control ${title.trim().length < 3 ? 'is-invalid' : 'is-valid'}`}
                         placeholder="Título del evento"
                         value={title}
                         onChange={changeEvent}

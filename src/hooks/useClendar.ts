@@ -29,7 +29,7 @@ export const useCalendar = () => {
         }
     }
 
-    const startDeleteEvent = async (id: string) => {
+    const startDeleteEvent = async (id: number) => {
         try {
             dispatch(deleteEvent(id))
         } catch (error) {

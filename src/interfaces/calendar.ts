@@ -7,11 +7,12 @@ export interface Calendars {
 }
 
 export interface Event {
-    id: number;
+    id?: number;
     title: string;
     allDay?: boolean;
     start: Date;
     end: Date;
+    desc: string
     user?: {
         id: number,
         username: string

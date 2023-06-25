@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react"
 
 
-const useForm = <T>(initialState: T) => {
+export const useForm = <T>(initialState: T) => {
 
     const [form, setform] = useState(initialState)
 
@@ -35,4 +35,4 @@ const useForm = <T>(initialState: T) => {
     }
 }
 
-export default useForm
+

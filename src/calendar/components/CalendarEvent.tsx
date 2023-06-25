@@ -1,24 +1,14 @@
 import { EventProps } from 'react-big-calendar';
+import { Event } from '../../interfaces/calendar';
 
-export interface PropsEvent {
-    id: number;
-    title: string;
-    allDay?: boolean;
-    start: Date;
-    end: Date;
-    user: {
-      id: number,
-      username: string
-    }
-}
 
-const CalendarEvent: React.FC<EventProps<PropsEvent>> = ({ event }) => {
+
+export const CalendarEvent: React.FC<EventProps<Event>> = ({ event }) => {
     return (
         <>
             <strong>{event.title} </strong>
-            <span>- {event.user.username}</span>
+            <span>- {event?.user?.username}</span>
         </>
     );
 };
 
-export default CalendarEvent;

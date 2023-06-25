@@ -4,7 +4,7 @@ import { Components } from "../interfaces/components"
 import { actionModal } from "../store/compontensSlice/componentsSlice"
 
 
-const useComponents = () => {
+export const useComponents = () => {
     const dispatch = useDispatch()
     const { isOpenModal } = useSelector<Global, Components>(state => state.components)
 
@@ -18,4 +18,4 @@ const useComponents = () => {
     }
 }
 
-export default useComponents
+

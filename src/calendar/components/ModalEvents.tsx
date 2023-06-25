@@ -6,10 +6,11 @@ registerLocale('es', es)
 
 import './styles.css'
 import "react-datepicker/dist/react-datepicker.css";
-import useForm from "../../hooks/useForm";
+
 import { addHours } from "date-fns";
 import { FormEvent } from 'react';
-import useComponents from '../../hooks/useComponents';
+import { useCalendar, useComponents, useForm } from '../../hooks';
+
 
 const customStyles = {
     content: {
@@ -24,9 +25,10 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-const ModalEvents = () => {
+export const ModalEvents = () => {
 
     const { isOpenModal, changeModalView } = useComponents()
+    const { startAddEvent } = useCalendar()
 
     const { form, start, end, title, desc, changeEvent, changeEventDataPicker } = useForm({
         start: new Date(),
@@ -37,7 +39,8 @@ const ModalEvents = () => {
 
     const sendFormEvent = (e: FormEvent) => {
         e.preventDefault()
-        console.log(form)
+        startAddEvent({ id: 123, ...form })
+        changeModalView()
     }
 
 
@@ -104,4 +107,3 @@ const ModalEvents = () => {
     )
 }
 
-export default ModalEvents

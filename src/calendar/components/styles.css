@@ -3,6 +3,23 @@
     width: 100%;
 }
 
+.buttonStyle{
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    font-size: 1.5rem;
+    z-index: 100;
+}
+
+.buttonStyle2{
+    position: fixed;
+    bottom: 5%;
+    left: 5%;
+    font-size: 1.5rem;
+    z-index: 100;
+}
+
+
 
 .ReactModalPortal > div{
     opacity: 0;

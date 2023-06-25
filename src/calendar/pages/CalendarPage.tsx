@@ -1,85 +1,47 @@
-import { Calendar, View } from 'react-big-calendar'
-import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { localizer } from '../../helpers/calendarLocalizer'
-
-
-
-import { Navbar } from ".."
-import { getMessages } from '../../helpers/messages'
-import CalendarEvent, { PropsEvent } from '../components/CalendarEvent'
 import { useState } from 'react'
-import ModalEvents from '../components/ModalEvents'
+import { Calendar, View } from 'react-big-calendar'
+import { localizer } from '../../helpers/calendarLocalizer'
+import 'react-big-calendar/lib/css/react-big-calendar.css'
 
-const myEventsList = [
-  {
-    id: 0,
-    title: 'All Day Event very long title',
-    allDay: true,
-    start: new Date(2023, 3, 10),
-    end: new Date(2023, 3, 10),
-    user: {
-      id: 1234,
-      username: 'Oscaer'
-    }
-  },
-  {
-    id: 1,
-    title: 'Long Event',
-    start: new Date(2023, 3, 10),
-    end: new Date(2023, 3, 10),
-    user: {
-      id: 1234,
-      username: 'Oscaer'
-    }
-  },
-
-  {
-    id: 2,
-    title: 'DTS STARTS',
-    start: new Date(2023, 3, 10),
-    end: new Date(2023, 3, 10),
-    user: {
-      id: 1234,
-      username: 'Oscaer'
-    }
-  },
-]
-
-const onDoubleClick = (event: PropsEvent) => {
-  console.log({ dobule: event })
-}
-
-const onSelect = (event: PropsEvent) => {
-  console.log({ select: event })
-}
-
-
-
-
-
-
+import { ButtonAdd, ButtonDelete, CalendarEvent, ModalEvents, Navbar } from ".."
+import { getMessages } from '../../helpers/messages'
+import { useCalendar, useComponents } from '../../hooks'
+import { Event } from '../../interfaces/calendar'
 
 
 export const CalendarPage = () => {
 
   const [viewCurrent, setviewCurrent] = useState<View>('month')
+  const { events, startActiveEvent } = useCalendar()
+  const { changeModalView } = useComponents()
 
   const onViewChange = (view: View) => {
     localStorage.setItem('view', view)
     setviewCurrent(view)
-    console.log(view)
   }
+
+  const onDoubleClick = (event: Event) => {
+    startActiveEvent(event)
+    changeModalView()
+  }
+
+  const onSelect = (event: Event) => {
+    startActiveEvent(event)
+  }
+
 
 
   return (
     <>
       <Navbar />
+      <ButtonAdd />
+      <ButtonDelete />
       <ModalEvents />
       <Calendar
         culture={'es'}
         localizer={localizer}
         defaultView={viewCurrent}
-        events={myEventsList}
+        events={events}
         startAccessor="start"
         endAccessor="end"
         messages={getMessages()}

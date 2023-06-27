@@ -1,6 +1,3 @@
-
-
-
 export interface Calendars {
     events: Event[],
     eventActive: Event | null
@@ -18,4 +15,21 @@ export interface Event {
         username: string
     }
 }
+
+export interface EventResponse {
+    ok:    boolean;
+    msg:   string;
+    event: Event;
+}
+
+// export interface Event {
+//     start:  string;
+//     end:    string;
+//     title:  string;
+//     desc:   string;
+//     user:   string;
+//     status: boolean;
+//     id:     string;
+// }
+
 

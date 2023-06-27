@@ -1,16 +1,10 @@
 import Swal from "sweetalert2"
 import { useCalendar } from "../../hooks"
-import { useEffect } from "react"
 
 
 export const ButtonDelete = () => {
 
   const { startDeleteEvent, eventActive, viewDelete } = useCalendar()
-
-  useEffect(() => {
-    console.log(viewDelete)
-  }, [viewDelete])
-
 
   const deleteEvent = () => {
     Swal.fire({

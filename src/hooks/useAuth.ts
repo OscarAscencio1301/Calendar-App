@@ -3,6 +3,7 @@ import { Global } from "../interfaces/global"
 import { Auth, Form, UserResponse } from "../interfaces/auth"
 import { checking, errorView, login, logout } from "../store/authSlice/authSlice"
 import connectAPI from "../config/axios"
+import { logoutEvents } from "../store/calendarSlice/calendarSlice"
 
 
 export const useAuth = () => {
@@ -80,6 +81,7 @@ export const useAuth = () => {
     const startLogout = async () => {
         localStorage.clear()
         dispatch(logout())
+        dispatch(logoutEvents())
     }
 
 

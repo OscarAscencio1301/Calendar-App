@@ -16,7 +16,7 @@ export const useCalendar = () => {
                 const { data } = await connectAPI.put<EventResponse>(`/events/${event.id}`, event)
 
                 if (data.ok) {
-                    dispatch(updateEvent(event))
+                    dispatch(updateEvent({ ...event, id: data.event.id }))
                 }
 
                 return
@@ -28,7 +28,7 @@ export const useCalendar = () => {
             const { data } = await connectAPI.post<EventResponse>('/events', event)
 
             if (data.ok) {
-                dispatch(addEvent(event))
+                dispatch(addEvent({ ...event, id: data.event.id }))
             }
 
 

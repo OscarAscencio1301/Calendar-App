@@ -31,8 +31,12 @@ export const calendarSlice = createSlice({
         },
         cleanEvent: (state) => {
             state.eventActive = null
+        },
+        logoutEvents: (state) => {
+            state.eventActive = null
+            state.events = []
         }
     }
 })
 
-export const { addEvent, activeEvent, cleanEvent, deleteEvent, updateEvent, viewEvent } = calendarSlice.actions
+export const { addEvent, activeEvent, cleanEvent, deleteEvent, updateEvent, viewEvent, logoutEvents } = calendarSlice.actions

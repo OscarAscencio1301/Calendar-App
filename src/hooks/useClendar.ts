@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux"
 import { Global } from "../interfaces/global"
-import { Calendars, Event } from "../interfaces/calendar"
-import { activeEvent, addEvent, cleanEvent, deleteEvent, updateEvent } from "../store/calendarSlice/calendarSlice"
+import { Calendars, Event, EventResponse, EventResponseMultiple } from "../interfaces/calendar"
+import { activeEvent, addEvent, cleanEvent, deleteEvent, updateEvent, viewEvent } from "../store/calendarSlice/calendarSlice"
+import connectAPI from "../config/axios"
 
 
 export const useCalendar = () => {
@@ -12,11 +13,26 @@ export const useCalendar = () => {
         try {
 
             if (event.id) {
-                dispatch(updateEvent(event))
-            } else {
-                dispatch(addEvent({ id: Date.now(), ...event }))
+                const { data } = await connectAPI.put<EventResponse>(`/events/${event.id}`, event)
+
+                if (data.ok) {
+                    dispatch(updateEvent(event))
+                }
+
+                return
 
             }
+
+
+
+            const { data } = await connectAPI.post<EventResponse>('/events', event)
+
+            if (data.ok) {
+                dispatch(addEvent(event))
+            }
+
+
+
 
         } catch (error) {
             console.log(error)
@@ -31,7 +47,32 @@ export const useCalendar = () => {
 
     const startDeleteEvent = async (id: number) => {
         try {
-            dispatch(deleteEvent(id))
+
+            const { data } = await connectAPI.delete<EventResponse>(`/events/${id}`)
+            if (data.ok) {
+                dispatch(deleteEvent(id))
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const startView = async () => {
+        try {
+
+            const { data } = await connectAPI.get<EventResponseMultiple>(`/events`)
+
+            if (data.ok) {
+                const eventsDates = data.events.map(ev => ({
+                    id: ev.id,
+                    start: new Date(ev.start),
+                    end: new Date(ev.end),
+                    title: ev.title,
+                    desc: ev.desc
+                }))
+
+                dispatch(viewEvent(eventsDates))
+            }
         } catch (error) {
             console.log(error)
         }
@@ -49,7 +90,8 @@ export const useCalendar = () => {
         startActiveEvent,
         startCleanEvent,
         startDeleteEvent,
-        startEvent
+        startEvent,
+        startView
     }
 }
 

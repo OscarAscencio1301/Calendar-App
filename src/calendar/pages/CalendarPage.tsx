@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Calendar, View } from 'react-big-calendar'
 import { localizer } from '../../helpers/calendarLocalizer'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
@@ -12,7 +12,7 @@ import { Event } from '../../interfaces/calendar'
 export const CalendarPage = () => {
 
   const [viewCurrent, setviewCurrent] = useState<View>('month')
-  const { events, startActiveEvent } = useCalendar()
+  const { events, startActiveEvent, startView } = useCalendar()
   const { changeModalView } = useComponents()
 
   const onViewChange = (view: View) => {
@@ -28,6 +28,11 @@ export const CalendarPage = () => {
   const onSelect = (event: Event) => {
     startActiveEvent(event)
   }
+
+  useEffect(() => {
+    startView()
+  }, [])
+
 
 
 

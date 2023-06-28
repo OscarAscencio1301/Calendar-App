@@ -22,6 +22,13 @@ export interface EventResponse {
     event: Event;
 }
 
+export interface EventResponseMultiple {
+    ok:    boolean;
+    msg:   string;
+    events: Event[];
+}
+
+
 // export interface Event {
 //     start:  string;
 //     end:    string;

@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import { LoginPage } from "../auth"
 import { CalendarPage } from "../calendar"
 import { useAuth } from "../hooks"
@@ -20,10 +20,10 @@ const AppRoutes = () => {
 
 
   return (
-    <BrowserRouter>
+    // <BrowserRouter>
       <Routes>
         {
-          stateAuth !== 'login' ?
+          stateAuth === 'logout' ?
             <>
               <Route path="/auth/*" element={<LoginPage />} />
               <Route path="/*" element={<Navigate to={'/auth/login'} />} />
@@ -37,7 +37,7 @@ const AppRoutes = () => {
             </>
         }
       </Routes>
-    </BrowserRouter>
+    // </BrowserRouter>
   )
 }
 

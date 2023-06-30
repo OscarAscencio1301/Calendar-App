@@ -12,6 +12,7 @@ import { FormEvent, useEffect } from 'react';
 import { useCalendar, useComponents, useForm } from '../../hooks';
 import Swal from 'sweetalert2';
 import { Event } from '../../interfaces/calendar';
+import { getVariables } from '../../helpers/getVariables';
 
 
 const customStyles = {
@@ -25,7 +26,10 @@ const customStyles = {
     },
 };
 
-Modal.setAppElement('#root');
+
+if (getVariables().VITE_MODE !== "test") {
+    Modal.setAppElement('#root');
+}
 
 const inititalState: Event = {
     start: new Date(),

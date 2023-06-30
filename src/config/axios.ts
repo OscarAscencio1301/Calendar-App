@@ -1,5 +1,6 @@
 import axios from "axios";
-import getVariables from "../helpers/getVariables";
+import { getVariables } from "../helpers/getVariables";
+
 
 const { VITE_API_URL } = getVariables()
 

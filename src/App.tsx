@@ -1,6 +1,7 @@
 import { Provider } from "react-redux"
 import AppRoutes from "./routes/AppRoutes"
 import { store } from "./store/store"
+import { BrowserRouter } from "react-router-dom"
 
 
 
@@ -8,7 +9,9 @@ import { store } from "./store/store"
 const App = () => {
     return (
         <Provider store={store}>
-            <AppRoutes />
+            <BrowserRouter>
+                <AppRoutes />
+            </BrowserRouter>
         </Provider>
     )
 }
